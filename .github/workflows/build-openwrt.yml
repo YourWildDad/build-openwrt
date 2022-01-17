@@ -28,34 +28,33 @@ jobs:
         run: |
           cd /home/runner
           bash ${GITHUB_WORKSPACE}/clone_source.sh
-          sudo chown -R runner:runner immortalwrt
+          sudo chown -R runner:runner openwrt
 
       - name: Before Build
         run: |
           bash ${GITHUB_WORKSPACE}/before_build.sh
-          cp -fpR ${GITHUB_WORKSPACE}/. /home/runner/immortalwrt/
 
       - name: Start Build
         run: |
-          cd /home/runner/immortalwrt
+          cd /home/runner/openwrt
           rm -f .config*
-          cp ${GITHUB_WORKSPACE}/.config /home/runner/immortalwrt
+          cp ${GITHUB_WORKSPACE}/.config /home/runner/openwrt
           make defconfig
           cat .config
           make -j$[$(nproc)+1] || make -j1 V=sc
 
       - name: After Build
         run: |
-          bash /home/runner/immortalwrt/after_build.sh
+          bash /home/runner/openwrt/after_build.sh
 
       - name: Upload Packages
         uses: actions/upload-artifact@v2
         with:
           name: Packages
-          path: /home/runner/immortalwrt/bin/packages/
+          path: /home/runner/openwrt/bin/packages/
 
       - name: Upload Firmwares
         uses: actions/upload-artifact@v2
         with:
           name: Firmwares
-          path: /home/runner/immortalwrt/bin/targets/
+          path: /home/runner/openwrt/bin/targets/

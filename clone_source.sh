@@ -1,4 +1,7 @@
 #!/bin/bash
+set -ex
 
-git clone "https://github.com/immortalwrt/immortalwrt.git" --branch "openwrt-21.02" --single-branch "immortalwrt"
-pushd "immortalwrt"; ./scripts/feeds update -a; ./scripts/feeds install -a; popd
+git clone --branch "openwrt-21.02" --single-branch "https://github.com/immortalwrt/immortalwrt.git" /home/runner/openwrt
+cd /home/runner/openwrt
+
+./scripts/feeds update -a && ./scripts/feeds install -a
