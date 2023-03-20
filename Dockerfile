@@ -10,4 +10,5 @@ RUN apt update && apt install -y curl sudo git make rsync gawk unzip wget python
 
 RUN curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh | bash
 
-RUN adduser runner
+RUN adduser runner &&\
+    echo "runner    ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/runner
