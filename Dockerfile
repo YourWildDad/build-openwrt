@@ -6,9 +6,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt update && apt install -y curl sudo git make rsync gawk unzip wget python3 python3-pip libncurses5-dev qemu-utils vim
+RUN apt update && apt install -y curl sudo
 
-RUN curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh | bash
+RUN bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
 
 RUN adduser runner &&\
     echo "runner    ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/runner
